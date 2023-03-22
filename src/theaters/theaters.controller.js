@@ -1,4 +1,5 @@
 const theatersService = require("./theaters.service");
+const asyncErrorBoundary = require("../errors/asyncErrorBoundary")
 
 async function theatersMovies (req, res, next) {
     try {
@@ -11,5 +12,5 @@ async function theatersMovies (req, res, next) {
 }
 
 module.exports = {
-    theatersMovies,
+   read: asyncErrorBoundary(theatersMovies)
 }
