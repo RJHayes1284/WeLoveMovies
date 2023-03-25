@@ -1,8 +1,8 @@
-function methodNotAllowed(request, response, next) {
-    next({
-      status: 405,
-      message: `${request.method} not allowed for ${request.originalUrl}`,
-    });
-  }
-  
-  module.exports = methodNotAllowed;
+function notFound(req, res, next) {
+  next({
+      status: 404,
+      message: `Path not found: ${req.originalUrl}`
+  });
+}
+
+module.exports = notFound;

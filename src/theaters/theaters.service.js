@@ -22,7 +22,6 @@ async function listTheaters() {
         .then((results) => reduceTheatersAndMovies(results))
 }
 
-
 module.exports = {
     listTheaters,
 }

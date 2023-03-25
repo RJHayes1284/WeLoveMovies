@@ -1,5 +1,4 @@
 const reviewsService = require("./reviews.service")
-const asyncErrorBoundary = require("../errors/asyncErrorBoundary")
 
 async function validateReview(req, res, next) {
     const { reviewId } = req.params;
@@ -27,13 +26,14 @@ async function update(req, res) {
      res.json({ data: await reviewsService.read(updatedReview.review_id) });
 }
 
-async function destroy(req, res, next){
+async function destroy(res, next){
     reviewsService.delete(res.locals.review.review_id)
         .then(() => res.sendStatus(204))
         .catch(next);
 }
 
+
 module.exports = {
-    update: [asyncErrorBoundary(validateReview), asyncErrorBoundary(update)],
-    delete: [asyncErrorBoundary(validateReview), asyncErrorBoundary(destroy)],
+    update: [validateReview, update],
+    delete: [validateReview, destroy],
 }
