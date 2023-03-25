@@ -28,6 +28,8 @@ async function destroy(reviewId) {
         .where({"review_id":reviewId}).del();
 }
 
+
+
 module.exports = {
     read,
     update,
