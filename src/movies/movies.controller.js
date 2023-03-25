@@ -9,7 +9,7 @@ async function validateMovie(req, res, next) {
         res.locals.movie = foundMovie;
         return next();
     }
-
+    // res.status(404).send("Not found.")
     next({
         status:404, 
         message:`Movie cannot be found: Id ${movieId}`
