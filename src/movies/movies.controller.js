@@ -3,18 +3,17 @@ const moviesService = require("./movies.service");
 //confirms that the movie exists by validating movieId, returns an error message if not
 async function validateMovie(req, res, next) {
     const { movieId } = req.params;
-    const movies = await moviesService.list();
-    const foundMovie = movies.find((movie) => movieId == movie.movie_id);
-    if(foundMovie) {
-        res.locals.movie = foundMovie;
+    const movie = await moviesService.read(movieId);
+
+    if (movie) {
+        res.locals.movie = movie;
         return next();
+    } else {
+        next({
+            status: 404,
+            message: `Movie cannot be found: Id ${movieId}`
+        });
     }
-    // res.status(404).send("Movie cannot be found: Id ${movieId}")
-    next({
-        status:404, 
-        message:`Movie cannot be found: Id ${movieId}`
-    });
- 
 }
 
 async function list(req, res, next) {

@@ -13,10 +13,10 @@ async function list(isShowing) {
 }
 
 async function read(movieId) {
-  return knex("movies")
-    .select("*")
-    .where({"movie_id":movieId})
-    .first();
+  return knex("movies as m")
+      .select("*")
+      .where({"movie_id": movieId})
+      .first();
 }
 
 async function readTheaters(movieId) {
