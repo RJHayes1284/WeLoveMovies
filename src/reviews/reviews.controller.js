@@ -1,22 +1,17 @@
 const reviewsService = require("./reviews.service");
 
 async function validateReview(req, res, next) {
-  try {
     const { reviewId } = req.params;
     const review = await reviewsService.read(reviewId);
 
-    if (review) {
-      res.locals.review = review;
-      return next();
-    } else {
-      next({
-        status: 404,
-        message: `Cannot find review with ID ${reviewId}`,
-      });
+    if(review){
+        res.locals.review = review;
+        return next();
     }
-  } catch (error) {
-    next(error);
-  }
+    next({
+        status:404, 
+        message:`cannot be found: ${reviewId}`
+    });
 }
 
 async function read(req, res, next) {
