@@ -14,6 +14,17 @@ async function validateReview(req, res, next) {
     });
 }
 
+async function read(req, res, next) {
+    try {
+        const { reviewId } = req.params;
+        const data = await reviewsService.read(reviewId);
+        res.json({ data });
+    }
+    catch(error) {
+        next(error);
+    }
+}
+
 async function update(req, res) {
 
     const updatedReview = {
@@ -26,14 +37,18 @@ async function update(req, res) {
      res.json({ data: await reviewsService.read(updatedReview.review_id) });
 }
 
-async function destroy(res, next){
-    reviewsService.delete(res.locals.review.review_id)
-        .then(() => res.sendStatus(204))
-        .catch(next);
-}
+async function destroy(req, res, next){
+    try {
+      await reviewsService.delete(res.locals.review.review_id)
+      res.sendStatus(204)
+    } catch (err) {
+      next(err)
+    }
+  }
 
 
 module.exports = {
+    read: [validateReview, read],
     update: [validateReview, update],
     delete: [validateReview, destroy],
 }
